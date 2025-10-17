@@ -3,13 +3,17 @@ import streamlit as st
 import scipy.stats as stats 
 import time
 
+#aqui abrimos variables apra guardar el estado de streamlit
 if 'outcome_no' not in st.session_state:
     st.session_state['outcome_no'] = 0
 
 if'df_experiment_results' not in st.session_state:
     st.session_state['df_experiment_results'] = pd.DataFrame(columns=['no', 'attemps', 'mean'] )
 
+
+#aqui tenemos el titulo
 st.header('Flip a Coin 🪙')
+st.markdown('Under Construction  \nPlease return later')
 
 chart= st.line_chart([.5])
 
@@ -32,7 +36,7 @@ number_of_trials= st.slider('Attemps', 1,1000, 50, 1)
 start_button= st.button('Start')
 
 if start_button:
-    st.write(f'test running with {number_of_trials} attemps')
+    st.write(f'test running with {number_of_trials} attemps.')
     mean= toss_coin(number_of_trials)
 
-st.markdown('Under Construction  \nplease return later')
+
