@@ -37,6 +37,15 @@ start_button= st.button('Start')
 
 if start_button:
     st.write(f'test running with {number_of_trials} attemps.')
+    st.session_state['experiment_no']+= 1
     mean= toss_coin(number_of_trials)
+    st.session_state['df_experiments_results']=pd.concat([
+        st.session_state['experiment_results'],
+        pd.DataFrame(data= [[st.session_state['experiment_no'],
+                             number_of_trials,
+                             mean]])
+        ],
+        axis=0)
+    st.session_state['df_experiment_results']= st.session_state['df_experiment_results'].reset_index(drop=True)
 
-
+st.write(st.session_state['df_experiment_results'])
