@@ -33,5 +33,6 @@ start_button= st.button('Start')
 
 if start_button:
     st.write(f'test running with {number_of_trials} attemps')
+    mean= toss_coin(number_of_trials)
 
 st.markdown('Under Construction  \nplease return later')
