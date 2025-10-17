@@ -1,6 +1,8 @@
 import streamlit as st 
 
-filp_a_coin = 'Flip a Coin, comming soon'
+flip_a_coin = def filp_a_coin():
+    yield 'Flip a Coin comming soon ...'
+
 st.header('Flip a Coin')
 
 st.markdown('Under Construction  \nplease return later')
