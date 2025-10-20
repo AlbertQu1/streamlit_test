@@ -4,12 +4,12 @@ import scipy.stats as stats
 import time
 
 #aqui abrimos variables apra guardar el estado de streamlit
-if 'outcome_no' not in st.session_state:
+if 'experiment_no' not in st.session_state:
     st.session_state['experiment_no'] = 0
 
 if 'df_experiment_results' not in st.session_state:
     st.session_state['df_experiment_results'] = pd.DataFrame(
-        columns=['no', 'attemps', 'mean']
+        columns=['no', 'attempts', 'mean']
     )
 
 
@@ -34,20 +34,23 @@ def toss_coin(n):
         time.sleep(.05)
     return mean
 
-number_of_trials= st.slider('Attemps', 1,1000, 50, 1)
+number_of_trials= st.slider('Attempts', 1,1000, 50, 1)
 start_button= st.button('Start')
 
 if start_button:
-    st.write(f'test running with {number_of_trials} attemps.')
-    st.session_state['experiment_no']+= 1
-    mean= toss_coin(number_of_trials)
-    st.session_state['df_experiments_results']=pd.concat([
-        st.session_state['df_experiment_results'],
-        pd.DataFrame(data = [[st.session_state['experiment_no'],
-                             number_of_trials,
-                             mean]])
-        ],
-        axis=0)
-    st.session_state['df_experiment_results']= st.session_state['df_experiment_results'].reset_index(drop=True)
+    st.write(f'test running with {number_of_trials} attempts.')
+    st.session_state['experiment_no'] += 1
+    mean = toss_coin(number_of_trials)
+
+    # agregar la fila y concatenar SOLO cuando se ejecutó el experimento
+    row_add = pd.DataFrame(
+        [[st.session_state['experiment_no'], number_of_trials, mean]],
+        columns=['no', 'attempts', 'mean']
+    )
+    st.session_state['df_experiment_results'] = pd.concat(
+        [st.session_state['df_experiment_results'], row_add],
+        axis=0,
+        ignore_index=True
+    )
 
 st.write(st.session_state['df_experiment_results'])
